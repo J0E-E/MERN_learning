@@ -1,6 +1,6 @@
-import React, {useReducer} from "react";
+import React, {useReducer, useEffect} from "react";
 
-import { validate } from "../../../Utils/Validators";
+import {validate} from "../../../Utils/Validators";
 import "../scss/Input.scss"
 
 const inputReducer = (state, action) => {
@@ -33,6 +33,14 @@ const Input = props => {
     const touchHandler = (event) => {
         dispatch({type: "TOUCH"})
     }
+
+    const {id, onInput} = props
+    const {value, isValid} = inputState
+
+    useEffect(() => {
+            onInput(id, value, isValid)
+        }, [id, value, isValid, onInput]
+    )
 
     const element = props.element === "input" ? (
         <input
